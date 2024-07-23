@@ -3,18 +3,18 @@ var request = require('request');
 
 var originator = "Cae-admin";
 var key = "xxxxxxx";
-var base= "http://127.0.0.1:8080/~";
-var cseId = "server";
-var cseName = "server";
+var cseId = "Mobius2";
+var cseName = "Mobius";
+var base= "http://127.0.0.1:8080/~/" + cseId + "/" + cseName;
 	
 discover();
 
 function discover(){
 	console.log("\n>>>>>");
-	console.log("GET "+base+"/"+cseId+"/"+cseName+"?fu=1&ty=23");
+	console.log("GET "+ base +"?fu=1&ty=23");
 
 	var options = {
-		uri: base+"/server/server?fu=1&ty=23",
+		uri: base+"?fu=1&ty=23",
 		method: "GET",
 		headers: {
 			"X-M2M-Origin": originator,

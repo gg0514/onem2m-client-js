@@ -1,12 +1,18 @@
 var express = require('express');
 var request = require('request');
 
+// SP-relative Scope Format  : /~/cseID/cseName
+// CSE relative Scope Format : /cseName
+
+var cse_uri= "http://192.168.4.197:7579/~/Mobius2/Mobius";				
+																
+
 createAE();
 function createAE(){
 	console.log("\n▶▶▶▶▶");
-	var originator = "Cae-sensor";
+	var originator = "Cae-sensor";									// AE ID
 	var method = "POST";
-	var uri= "http://127.0.0.1:8080/~/server/server";
+	var uri= cse_uri;
 	var resourceType=2;
 	var requestId = "123456";
 	var representation = {
@@ -48,7 +54,7 @@ function createContainer(){
 	console.log("\n▶▶▶▶▶");
 	var originator = "Cae-sensor";
 	var method = "POST";
-	var uri= "http://127.0.0.1:8080/~/server/server/mysensor";
+	var uri= cse_uri+ "/mysensor";
 	var resourceType=3;
 	var requestId = "123456";
 	var representation = {
@@ -80,6 +86,8 @@ function createContainer(){
 		}else{
 			console.log(response.statusCode);
 			console.log(body);
+
+			// 5초에 한번씩 조도 데이터 생성
 			setInterval(function() {
 				createContentInstance();
 			}, 5000);
@@ -88,10 +96,11 @@ function createContainer(){
 }
 
 function createContentInstance(){
+
 	console.log("\n▶▶▶▶▶");
 	var originator = "Cae-sensor";
 	var method = "POST";
-	var uri= "http://127.0.0.1:8080/~/server/server/mysensor/luminosity";
+	var uri= cse_uri+ "/mysensor/luminosity";
 	var resourceType=4;
 	var requestId = "123456";
 	var representation = {
@@ -114,8 +123,10 @@ function createContentInstance(){
 		json: representation
 	};
 
+	const now = new Date();
+
 	request(options, function (error, response, body) {
-		console.log("◀◀◀◀◀");
+		console.log("◀◀◀◀◀ " + now.toLocaleString());
 		if(error){
 			console.log(error);
 		}else{
